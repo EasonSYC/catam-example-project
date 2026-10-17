@@ -1,0 +1,81 @@
+\documentclass{article}
+\usepackage{eason}
+
+\usepackage{pdfpages}
+
+\usepackage[a4paper, margin=1in]{geometry}
+
+\usepackage{lipsum}
+\usepackage{mwe}
+
+\usemintedstyle{bw}
+
+\numberwithin{equation}{section}
+
+\usepackage{titlesec}
+\titleformat{\section}{\normalfont\Large\bfseries}{}{0pt}{}
+
+\title{\LaTeX\ Template File}
+\author{Eason Shao}
+
+\begin{document}
+% \maketitle
+
+{\LARGE\bf Project}
+
+\vspace*{-10mm}
+\hfill\framebox{\parbox[t][5 true cm][c]{11 true cm}{\hfil
+        Space for the project label }}
+
+\bigbreak
+
+\begin{center}\LARGE\bf
+  Project Title
+\end{center}
+
+\section{Question}
+
+\autoref{eq:euler} is \term{Euler's identity}, and is illustrated in \autoref{fig:example}.
+
+\begin{equation}
+    \label{eq:euler}%
+    e^{i\pi} + 1 = 0.
+\end{equation}
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.5\textwidth]{example-image-a}
+    \caption{Example Image}
+    \label{fig:example}
+\end{figure}
+
+\section{Task}
+
+The output is in \autoref{tab:example}.The code is as in \autoref{lst:example}.
+
+\begin{table}[ht!]
+    \centering
+    \caption{Example Table}
+    \smallskip 
+    \begin{tabular}{|c|c|c|}
+        \hline
+        Column 1 & Column 2 & Column 3 \\
+        \hline
+        Data 1 & Data 2 & Data 3 \\
+        Data 4 & Data 5 & Data 6 \\
+        \hline
+    \end{tabular}
+    \label{tab:example}
+\end{table}
+
+\clearpage
+\appendix
+\section{Listings}
+
+\begin{listing}[htp]
+    \inputminted{python}{src/test.py}
+    \caption{Testing Python code}
+    \label{lst:example}%
+\end{listing}
+
+\end{document}
