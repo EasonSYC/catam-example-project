@@ -11,6 +11,7 @@ on:
 
 jobs:
   compile:
+    name: Compile PDF
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -19,8 +20,36 @@ jobs:
     - name: Setup TeX Live
       uses: EasonSYC/latex-style-setup@main
 
+    - name: Install pipenv
+      run: pipx install pipenv
+
+    - name: Setup Python
+      uses: actions/setup-python@v7
+      with:
+        python-version: '3.15'
+        cache: 'pipenv'
+
+    - name: Install dependencies from Pipfile.lock
+      run: pipenv install --deploy
+
+    - name: Run Python File
+      working-directory: src
+      run: pipenv run python notebook.py
+
     - name: Compile PDF
       uses: EasonSYC/latex-compile-pdf@main
       with:
         job-name: ${{ github.event.repository.name }}
         version: false
+
+    - name: Upload Data CSVs
+      uses: actions/upload-artifact@v7
+      with:
+        name: Data CSV
+        path: data/
+
+    - name: Upload Figures
+      uses: actions/upload-artifact@v7
+      with:
+        name: Figures
+        path: fig/
