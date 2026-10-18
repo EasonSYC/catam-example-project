@@ -7,11 +7,17 @@
 
 \usepackage{lipsum}
 \usepackage{mwe}
+\usepackage{environ}
+
+% \RenewEnviron{figure}{}
+% \RenewEnviron{table}{}
+% \RenewEnviron{listing}{}
 
 \usemintedstyle{bw}
 
-\usepackage{titlesec}
 \titleformat{\section}{\normalfont\Large\bfseries}{}{0pt}{}
+
+\newcommand{\rowdots}{\vphantom{0}\smash{\raisebox{-0.7ex}{\vdots}}}
 
 \title{\LaTeX\ Template File}
 \author{Eason Shao}
@@ -41,12 +47,12 @@ To show the function \(F\pqty{x} = 2x - 3 \sin x + 5\) has exactly one root, it 
     \item if \(x > -1\), then \(F\pqty{x} > 3 - 3 = 0\).
 \end{itemize}
 
-Regarranging \(F\pqty{x} = 0\) to \(2x + 5 = 3 \sin x\), \autoref{fig:question-1-fig} plots the functions in the region concerned.
+Rearranging \(F\pqty{x} = 0\) to \(2x + 5 = 3 \sin x\), \autoref{fig:question-1-fig} plots the functions in the region concerned.
 
 \begin{figure}[ht!]
     \centering
     \includegraphics[width=0.8\textwidth]{fig/question-1.png}
-    \caption{Graph of Functions, for \(4 \leq x \leq 1\)}
+    \caption{Graph of \(3 \sin \pqty{x}\) and \(2x + 5\), for \(4 \leq x \leq 1\) \\ \small Produced by \autoref{lst:question-1-code} on Page \pageref{lst:question-1-code}}
     \label{fig:question-1-fig}%
 \end{figure}
 
@@ -54,20 +60,19 @@ The function \(y = 3 \sin x\) is strictly decreasing on \(\ccintv{-\flatfrac{3\p
 
 \section{Programming Task: Binary Search}
 
-The program was ran on suitable starting values, and some results are included in \autoref{tab:programming-task-binary-search}%
+The procedure in \autoref{lst:programming-task-binary-search} on Page \pageref{lst:programming-task-binary-search} implements binary search, and was ran on suitable starting values, and some results are included in \autoref{tab:programming-task-binary-search}.
 
 \begin{table}[ht!]
     \centering
     \caption{Binary Search Results}
-    \smallskip 
-    \begin{tabular}{|c|c|c|c|}
-        \hline
+    \begin{tabular}{cccc}
+        \toprule
         Initial Endpoints & Iterations & Final Value & Truncation Error \\
-        \hline
+        \midrule
         \(\ccintv{-3}{-2}\) & \(17\) & \(-2.8832359\ldots\) & \(\num{\pm 3.8146e-6}\) \\
         \(\ccintv{-\pi}{0}\) & \(19\) & \(-2.8832397\ldots\) & \(\num{\pm 2.9960e-6}\) \\
         \(\ccintv{-10}{10}\) & \(19\) & \(-2.8832368\ldots\) & \(\num{\pm 2.8610e-6}\) \\
-        \hline
+        \bottomrule
     \end{tabular}
     \label{tab:programming-task-binary-search}
 \end{table}
@@ -93,9 +98,13 @@ by the hint of \(\abs{F'\pqty{x}} > 4\) and that \(x_{\ast} \in \oointv{-\flatfr
 
 \section{Programming Task: Fixed-Point Iteration}
 
+The procedure in \autoref{lst:programming-task-fixed-point} on Page \pageref{lst:programming-task-fixed-point} is implemented for fixed-point iteration.
+
 \section{Question 3}
 
-\paragraph{i. Divergence} \autoref{fig:question-3-i} gives the iteration process (in green) when we use the initial values specified in (i). Notice that the iteration values oscillates between approximately \(-4.0\) and approximately \(-1.4\), and in particular, never converges.
+For the purpose of this question, procedures and functions in \autoref{lst:question-3-general-code-fig} and \autoref{lst:question-3-general-code-tab} on Pages \pageref{lst:question-3-general-code-fig} and \pageref{lst:question-3-general-code-tab} are re-used across this question to produce the diagrams and the data, respectively.
+
+\paragraph{i. Divergence} \autoref{lst:question-3} on Page \pageref{lst:question-3} was run, and \autoref{fig:question-3-i} gives the iteration process (in green) when we use the initial values specified in (i). Notice that the iteration values oscillates between approximately \(-4.0\) and approximately \(-1.4\), as in the final 4 rows of \autoref{tab:question-3-i}, and in particular, does not converge.
 
 \begin{figure}[ht!]
     \centering
@@ -103,6 +112,13 @@ by the hint of \(\abs{F'\pqty{x}} > 4\) and that \(x_{\ast} \in \oointv{-\flatfr
     \caption{Iteration Process with \(k = 0\) and \(x_0 = -2\)}
     \label{fig:question-3-i}%
 \end{figure}
+
+\begin{table}[ht!]
+    \centering
+    \caption{Iteration Data with \(k = 0\) and \(x_0 = -2\)}
+    \input{tex/question-3-i.tex}
+    \label{tab:question-3-i}%
+\end{table}
 
 Mathematically speaking, divergence occurs because of the following. Let \(x_{\ast}\) be a fixed point. Then the iteration satisfies \(f\pqty{x_\ast} = x_\ast\) at the point itself, and for the iteration to converge to the fixed point, if \(x_N\) is near the fixed point, then \(x_{N + 1} = f\pqty{x_N}\), we note
 \begin{equation}
@@ -145,8 +161,7 @@ Choosing \(k = 3\) will give \(f'\pqty{x_{\ast}} > 0\) since \(3 \cos x + 3 \geq
 
 On the other hand, choosing \(k = 1\) will give \(f'\pqty{x_{\ast}} = -0.63347\ldots < 0\), so we will expect oscillatory convergence for a sufficiently good initial guess, as plotted in \autoref{fig:question-3-iii-2}.
 
-
-\begin{figure*}[ht!]
+\begin{figure}[ht!]
     \centering
     \begin{subfigure}[t]{0.5\textwidth}
         \centering
@@ -162,9 +177,40 @@ On the other hand, choosing \(k = 1\) will give \(f'\pqty{x_{\ast}} = -0.63347\l
         \label{fig:question-3-iii-2}%
     \end{subfigure}
     \caption{Oscillatory and Monotonic Iteration Processes with \(x_0 = -2\)}
-\end{figure*}
+    \label{fig:question-3-iii}%
+\end{figure}
+
+The data for \(k = 3\) and \(k = 1\) are given in \autoref{tab:question-3-iii-1} and \autoref{tab:question-3-iii-2} respectively -- we note the consistent sign in \(\epsilon_N\) (with positive ratios) for \(k = 3\) and the alternating sign in \(\epsilon_N\) (with negative ratios) for \(k = 1\) indeed matches with the graphs.
+
+\begin{table}[ht!]
+    \centering
+    \caption{Oscillatory and Monotonic Iteration Data with \(x_0 = -2\)}
+    \label{tab:question-3-iii}%
+    \small
+    \begin{subtable}[t]{0.5\textwidth}
+        \centering
+        \caption{\(k = 3\)}
+        \input{tex/question-3-iii-1.tex}
+        \label{tab:question-3-iii-1}%
+    \end{subtable}%
+    ~
+    \begin{subtable}[t]{0.5\textwidth}
+        \centering
+        \caption{\(k = 1\)}
+        \input{tex/question-3-iii-2.tex}
+        \label{tab:question-3-iii-2}%
+    \end{subtable}
+    \normalsize
+\end{table}
 
 \paragraph{iv. Slow Convergence} By running the code on \(k = 16\), we obtain \autoref{fig:question-3-iv}, terminating after \(N = 34 < 50\) steps. In particular, \(x_{34} = -2.88321\ldots\) and the truncation error \(\epsilon_{34} = \num{2.10845e-5} > \num{1e-5}\).
+
+\begin{table}[ht!]
+    \centering
+    \caption{Iteration Data with \(k = 16\) and \(x_0 = -2\)}
+    \input{tex/question-3-iv.tex}
+    \label{tab:question-3-iv}%
+\end{table}
 
 \begin{figure}[ht!]
     \centering
@@ -188,18 +234,250 @@ So after \(34\) iterations, using the bound \(\epsilon \in \ccintv{0.75}{1}\), w
 \end{equation}
 and certainly larger than \(\num{1.0e-5}\). This is consistent with our calculation.
 
+However, \textit{a priori} we would not know that this process converges in 34 steps. Therefore, by rearranging \autoref{eq:error-local}, we have
+\begin{equation}
+    x_{N + 1} - x_N \approx \pqty{f'\pqty{x_{\ast}} - 1} \pqty{x_N - x_\ast} \approx \frac{f'\pqty{x_{\ast}} - 1}{f'\pqty{x_{\ast}}} \pqty{x_{N + 1} - x_{\ast}},
+\end{equation}
+which then gives the truncation error in terms of the difference between the terms
+\begin{equation}
+    \abs{\epsilon_{N + 1}} \approx \abs{\frac{\pqty{x_{N + 1} - x_N} f'\pqty{x_{\ast}}}{f'\pqty{x_{\ast}} - 1}}.
+\end{equation}
+
+Putting \(\abs{x_{N + 1} - x_N} = \num{1e-5}\) and \(f'\pqty{x_{\ast}} = 0.72775\), we have \(\abs{\epsilon_N} \approx \num{2.67314e-5}\), which is close to the final two lines of \(\epsilon_N\) in \autoref{tab:question-3-iv}.
+
 \paragraph{v. First-Order Convergence}
 
+Recall from \autoref{eq:error-local}, that in theory, we will have \(\flatfrac{\epsilon_{N + 1}}{\epsilon_N} \approx f'\pqty{x_\ast}\) as \(N \to \infty\). By differentiating, and numerical calculations we have
+\begin{equation}
+    f'\pqty{x_\ast} \approx 0.01991, -0.63347, 0.72775
+\end{equation}
+for \(k = 3, 1\) and \(16\) respectively. This matches the data in the \(\flatfrac{\epsilon_N}{\epsilon_{N - 1}}\) column in \autoref{tab:question-3-iii} for \(k = 3\) and \(k = 1\), and \autoref{tab:question-3-iv} for \(k = 16\). This is consistent with the theoretical result of first-order convergence.
 
+\paragraph{Code for Parts (iii) and (iv)} The code for parts (iii) and (iv) are near-identical to \autoref{lst:question-3} on Page \pageref{lst:question-3} and hence omitted in this document.
+
+\section{Question 4}
+
+The relevant code for this question can be found on \autoref{lst:question-4} on Page \pageref{lst:question-4}.
+
+\paragraph{Rate of Converge is Slow} We start with a initial data of \(x_0 = 5\). The iteration process in \autoref{tab:question-4} demonstrates (slow) monotonic convergence to the double root \(x_{\ast} = 4\). This is indeed expected, since at this double root, \(F'\pqty{x_\ast} = 0\), and hence
+\begin{equation}
+    f'\pqty{x} = 1 - h'\pqty{F\pqty{x_\ast}} F'\pqty{x_\ast} = 1
+\end{equation}
+is at the boundary of convergence and divergence, as discussed in \autoref{eq:error-local}.
+
+\begin{table}[ht!]
+    \centering
+    \caption{Iteration Data for Convergence to Double Root \\ \small Horizontal Line is where \(x_N - x_{N - 1} < \num{1e-5}\)}
+    \input{tex/question-4.tex}
+    \label{tab:question-4}%
+\end{table}
+
+% \begin{figure}[ht!]
+%     \centering
+%     \includegraphics[width=0.8\textwidth]{fig/question-4.png}
+%     \caption{Iteration Process for Convergence to Double Root}
+%     \label{fig:question-4}%
+% \end{figure}
+
+\paragraph{Truncation Error and Termination Condition} We therefore expand to a higher order to study the behaviour. We have
+\begin{equation}
+    \label{eq:second-order-approximation}%
+    \begin{aligned}
+        x_{N + 1} &= f\pqty{x_N} \\
+        &\approx f\pqty{x_\ast} + f'\pqty{x_\ast} \pqty{x_N - x_\ast} + \frac{f''\pqty{x_\ast}}{2} \pqty{x_N - x_\ast}^2 \\
+        &= x_\ast + \pqty{x_N - x_\ast} + \frac{f''\pqty{x_\ast}}{2} \pqty{x_N - x_\ast}^2 \\
+        &= x_N + \frac{f''\pqty{x_\ast}}{2} \pqty{x_N - x_\ast}^2.
+    \end{aligned}
+\end{equation}
+and hence
+\begin{equation}
+    x_{N + 1} - x_N \approx \frac{f''\pqty{x_{\ast}}}{2} \epsilon_N^2 \approx \frac{f''\pqty{x_{\ast}}}{2} \epsilon_{N + 1}^2,
+\end{equation}
+so
+\begin{equation}
+    \abs{\epsilon_{N + 1}} \approx \sqrt{\frac{2 \pqty{x_{N + 1} - x_N}}{f''\pqty{x_{\ast}}}}.
+\end{equation}
+
+Putting in \(x_{\ast} = 4\) gives \(f''\pqty{x_\ast} = - \flatfrac{7}{20} = -0.35\), so we expect \(\abs{\epsilon_{N + 1}} \approx 0.007559\), which matches with the final few lines of data in \autoref{tab:question-4}, and definitely not less than \(10^{-5}\).
+
+\paragraph{Asymptotic behaviour of \(\epsilon_N\)} We claim that \(\epsilon_N \sim \flatfrac{40}{\pqty{7N}}\), which is clearly the behaviour demonstrated in \autoref{tab:question-4} (although very slowly -- the data was extended to the \(N = 5000\) iteration). If this claim were true, then \(\flatfrac{\epsilon_N}{\epsilon_{N - 1}} \to 1\) which is not first-order convergence.
+
+To prove this claim mathematically, we rearrange \autoref{eq:second-order-approximation} to get 
+\begin{equation}
+    \epsilon_{N + 1} \approx \epsilon_N + \frac{f''\pqty{x_{\ast}}}{2} \epsilon_N^2 = \epsilon_N - \frac{7}{40} \epsilon_N^2,
+\end{equation}
+and seeking for an ansatz of the form \(\epsilon_N ~ \flatfrac{k}{N}\) gives \(\flatfrac{1}{N + 1} \sim \flatfrac{1}{N} - \flatfrac{7 k}{40 N^2}\), and note \(\flatfrac{1}{N + 1} - \flatfrac{1}{N} \sim \flatfrac{1}{N^2}\) so \(k = \flatfrac{40}{7}\) as claimed.
+
+\section{Programming Task: Newton--Raphson}
+
+The procedure in \autoref{lst:programming-task-newton-raphson} on Page \pageref{lst:programming-task-newton-raphson} was implemented for the Newton--Raphson method, re-using the fixed-point iteration procedure in \autoref{lst:programming-task-fixed-point} on Page \pageref{lst:programming-task-fixed-point}
+
+\section{Question 5}
+
+The procedures and functions in \autoref{lst:question-5-general-code} on Page \pageref{lst:question-5-general-code} are re-used across this question to produce the diagrams and the data.
+
+\paragraph{Solving the Single Root} We investigate \(f\pqty{x} = 2 x - 3 \sin x + 5\) first, and \autoref{fig:question-5-eq-4} shows the iteration processes for two different initial values, with the green lines being the tangents. Code in \autoref{lst:question-5-eq-4} on Page \pageref{lst:question-5-eq-4} are run to produce the diagrams and the data.
+
+Taking \(x_0 = -10\) leads to divergence in the first few steps, as demonstrated in \autoref{fig:question-5-eq-4-diverge} (and calculations shown that it does not converge in \(100\) steps), while taking \(x_0 = -2\) leads to very rapid convergence, with the program terminating in \(4\) steps if we set \(\epsilon = \num{1e-5}\). In fact, in \autoref{fig:question-5-eq-4-converge}, the convergence is so quick that only two steps could be observed from the plot.
+
+\begin{figure}[ht!]
+    \centering
+    \begin{subfigure}[t]{0.5\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{fig/question-5-eq-4-1-diverge.png}
+        \caption{Divergence: \(x_0 = -10\)}
+        \label{fig:question-5-eq-4-diverge}%
+    \end{subfigure}%
+    ~
+    \begin{subfigure}[t]{0.5\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{fig/question-5-eq-4-2-converge.png}
+        \caption{Divergence: \(x_0 = -2\)}
+        \label{fig:question-5-eq-4-converge}%
+    \end{subfigure}
+    \caption{Convergence and Divergence for \(f\pqty{x} = 2 x - 3 \sin x + 5\)}
+    \label{fig:question-5-eq-4}%
+\end{figure}
+
+\subparagraph{Rate of Convergence} Consider expanding the iteration expansion about \(x_{\ast}\),
+\begin{equation}
+    \label{eq:rate-of-convergence-newton-raphson-single-root}%
+    \begin{aligned}
+        x_{N + 1} &= x_N - \frac{f\pqty{x_N}}{f'\pqty{x_N}} \\
+        &= x_N - \frac{f\pqty{x_\ast} + \pqty{x_N - x_{\ast}} f'
+        \pqty{x_{\ast}} + f''\pqty{x_{\ast}}\flatfrac{\pqty{x_N - x_{\ast}}^2}{2} + \cdots}{f'\pqty{x_\ast} + f''\pqty{x_{\ast}}\pqty{x_N - x_{\ast}} + \cdots} \\
+        &= x_N - \pqty{x_N - x_{\ast}} \frac{f'\pqty{x_{\ast}} + f''\pqty{x_{\ast}} \flatfrac{\epsilon_N}{2} + \bigO\pqty{\epsilon_N^2}}{f'\pqty{x_{\ast}} + f''\pqty{x_{\ast}} {\epsilon_N} + \bigO\pqty{\epsilon_N^2}} \\
+        &= x_N - \pqty{x_N - x_{\ast}} \pqty{1 + \frac{f''}{f'} \frac{\epsilon_N}{2} + \bigO\pqty{\epsilon_N^2}} \pqty{1 - \frac{f''}{f'} \epsilon_N + \bigO\pqty{\epsilon_N^2}},
+    \end{aligned}
+\end{equation}
+and hence subtracting \(x_{\ast}\) on both sides,
+\begin{equation}
+    \begin{aligned}
+        \epsilon_{N + 1} &= \epsilon_N \pqty{1 - \pqty{1 + \frac{f''}{f'} \frac{\epsilon_N}{2}} \pqty{1 - \frac{f''}{f'} \epsilon_N}} + \bigO\pqty{\epsilon_N^4} \\
+        &= \pqty{\frac{f''\pqty{x_{\ast}}}{2f'\pqty{x_{\ast}}}} \epsilon_N^2  + \bigO\pqty{\epsilon_N^3}.
+    \end{aligned}
+\end{equation}
+
+This is indeed second-order convergence in theory. By calculation, \(\flatfrac{f''\pqty{x_\ast}}{2 f'\pqty{x_{\ast}}} \approx -0.07820\). Observing in the final column \autoref{tab:question-5-eq-4-converge}, this data matches with entries \(N = 3, 4\), as expected.
+
+\begin{table}[ht!]
+    \centering
+    \caption{Data for Convergence of \(f\pqty{x} = 2x - 3 \sin x + 5\), \(x_0 = -2\)}
+    \label{tab:question-5-eq-4-converge}%
+    \input{tex/question-5-eq-4-2-converge.tex}
+\end{table}
+
+\subparagraph{Rounding Error} Since \(f'\pqty{x_\ast} \neq 0\), the rounding error of \(f'\) is negligible near \(x_\ast\). If we set \(\epsilon = \num{1e-20}\), this will result in two extra rows, and in particular, row 5 gives the exact solution, so far as Python \verb|numpy| \verb|float64| is concerned (\(\sim \num{1e-15}\)).
+
+\paragraph{Solving the Double Root} We now investigate \(f\pqty{x} = x^3 - 8.5 x^2 + 20x - 8\). Code in \autoref{lst:question-5-eq-5} on Page \pageref{lst:question-5-eq-5} are run, and the starting value \(x_0 = 5\) correctly lets the process to converge to the double root we desire to study, namely \(x_{\ast} = 4\), through 17 steps if we set \(\epsilon = \num{1e-5}\). This process is demonstrated in \autoref{fig:question-5-eq-5}. Note that we observe significantly more tangents, so we expect to derive the result of a slower convergence, in theory.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=\linewidth]{fig/question-5-eq-5.png}
+    \caption{Convergence to Double Root for \(f\pqty{x} = x^3 - 8.5 x^2 + 20x - 8\), \(x_0 = 5\)}
+    \label{fig:question-5-eq-5}%
+\end{figure}
+
+\subparagraph{Rate of Convergence} Note at a double root, not only \(f\pqty{x_{\ast}} = 0\), we also have \(f'\pqty{x_{\ast}} = 0\). Expanding as \autoref{eq:rate-of-convergence-newton-raphson-single-root}, suppose \(f''\pqty{x_{\ast}} \neq 0\), we get
+\begin{equation}
+    \begin{aligned}
+        x_{N + 1} &= x_N - \frac{f\pqty{x_N}}{f'\pqty{x_N}} \\
+        &= x_N - \frac{f\pqty{x_\ast} + \pqty{x_N - x_{\ast}} f'
+        \pqty{x_{\ast}} + f''\pqty{x_{\ast}}\flatfrac{\pqty{x_N - x_{\ast}}^2}{2} + \cdots}{f'\pqty{x_\ast} + f''\pqty{x_{\ast}}\pqty{x_N - x_{\ast}} + \cdots} \\
+        &= x_N - \frac{\epsilon_N}{2} + \bigO\pqty{\epsilon_N^2}
+    \end{aligned}
+\end{equation}
+and hence
+\begin{equation}
+    \epsilon_{N + 1} = \frac{\epsilon_N}{2} + \bigO\pqty{\epsilon_N^2}
+\end{equation}
+gives a theoretical first-order convergence, and with \(C = \frac{1}{2}\), which is identical to a simple bisection method. Comparing with data in \autoref{tab:question-5-eq-5} (where we added extra lines to \(N = 26\) corresponding to \(\num{1e-20}\)), we note that the second-from-last column is relatively consistent with out claim of \(\frac{1}{2}\), but for the final few rows, this deviates from theory, since \verb|numpy| \verb|float64| type lost precision in calculations for \(x_N\) when the error goes below approximately \(\sim \num{1e-15}\) (i.e. near row 25).
+
+\begin{table}[ht!]
+    \centering
+    \caption{Data for Convergence of \(f\pqty{x} = x^3 - 8.5 x^2 + 20x - 8\), \(x_0 = 5\)}
+    \label{tab:question-5-eq-5}%
+    \input{tex/question-5-eq-5.tex}
+\end{table}
+
+\subparagraph{Rounding Error} For a double root, the rounding error is more significant, since \(F'\pqty{x_{\ast}} = 0\), and dividing by the derivative will significantly amplify the error in evaluating \(F\) near \(x_{\ast}\).
 
 \clearpage
 \appendix
 \section{Listings}
 
+Program was coded in a \verb|.ipynb| Jupyter Notebook (\verb|notebook.ipynb|, a fresh version \verb|notebook-fresh.ipynb| without outputs) using Python 3.15.0, utilising packages \verb|numpy|, \verb|pandas| and \verb|matplotlib|. In addition, a custom \verb|macros.tex| is used for producing the \LaTeX formulae in titles in the diagrams, but is itself irrelevant to the code and the mathematics.
+
+A program \verb|convert-csv-to-latex.py| is used to convert the exported \verb|.csv| data files to \LaTeX-formatted \verb|tabular| environments, and is itself irrelevant to the mathematical contents.
+
+The following listings are key segments of the original code (exported into \verb|notebook.py|) related to the problem, and might not run individually. The Python code can be run as a whole, and will export the data into \verb|.csv| and figures into \verb|.png|.
+
+All programs mentioned above apart from \verb|macros.tex| and \verb|convert-csv-to-latex.py| are submitted for inspection.
+
 \begin{listing}[htp]
-    % \inputminted{python}{src/test.py}
-    \caption{Testing Python code}
-    \label{lst:example}%
+    \inputminted[firstline=32, lastline=52]{python}{src/notebook.py}
+    \caption{Code to Produce \autoref{fig:question-1-fig}}
+    \label{lst:question-1-code}%
+\end{listing}
+
+\begin{listing}[htp]
+    \inputminted[firstline=54, lastline=110]{python}{src/notebook.py}
+    \caption{Binary Search}
+    \label{lst:programming-task-binary-search}%
+\end{listing}
+
+\begin{listing}[htp]
+    \inputminted[firstline=120, lastline=145]{python}{src/notebook.py}
+    \caption{Fixed Point Iteration}
+    \label{lst:programming-task-fixed-point}%
+\end{listing}
+
+\begin{listing}[htp]
+    \inputminted[firstline=155, lastline=197]{python}{src/notebook.py}
+    \caption{General Code to Produce \autoref{fig:question-3-i}, \autoref{fig:question-3-iii} and \autoref{fig:question-3-iv}}
+    \label{lst:question-3-general-code-fig}%
+\end{listing}
+
+\begin{listing}[htp]
+    \inputminted[firstline=199, lastline=210]{python}{src/notebook.py}
+    \caption{General Code to Produce \autoref{tab:question-3-i}, \autoref{tab:question-3-iii} and \autoref{fig:question-3-iv}}
+    \label{lst:question-3-general-code-tab}%
+\end{listing}
+
+\begin{listing}[htp]
+    \inputminted[firstline=212, lastline=240]{python}{src/notebook.py}
+    \caption{Code Related to Question 3 (i) [Similar Code for (iii) and (iv) Omitted]}
+    \label{lst:question-3}%
+\end{listing}
+
+\begin{listing}[htp]
+    \inputminted[firstline=344, lastline=378]{python}{src/notebook.py}
+    \caption{Code Related to Question 4}
+    \label{lst:question-4}%
+\end{listing}
+
+\begin{listing}[htp]
+    \inputminted[firstline=380, lastline=391]{python}{src/notebook.py}
+    \caption{Newton--Raphson Method}
+    \label{lst:programming-task-newton-raphson}%
+\end{listing}
+
+\begin{listing}[htp]
+    \inputminted[firstline=393, lastline=443]{python}{src/notebook.py}
+    \caption{General Code for Question 5, for \autoref{fig:question-5-eq-4}, \autoref{fig:question-5-eq-5}, and \autoref{tab:question-5-eq-4-converge}, \autoref{tab:question-5-eq-5}}
+    \label{lst:question-5-general-code}%
+\end{listing}
+
+\begin{listing}[htp]
+    \inputminted[firstline=445, lastline=491]{python}{src/notebook.py}
+    \caption{General Code for Question 5, for Single-Root}
+    \label{lst:question-5-eq-4}%
+\end{listing}
+
+\begin{listing}[htp]
+    \inputminted[firstline=493, lastline=512]{python}{src/notebook.py}
+    \caption{General Code for Question 5, for Double-Root}
+    \label{lst:question-5-eq-5}%
 \end{listing}
 
 \end{document}
