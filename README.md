@@ -1,5 +1,5 @@
-# catam-template
+# catam-example-project
 
-[![LaTeX Compile PDF](https://github.com/EasonSYC/catam-template/actions/workflows/compile-pdf.yml/badge.svg)](https://github.com/EasonSYC/catam-template/actions/workflows/compile-pdf.yml)
+[![LaTeX Compile PDF](https://github.com/EasonSYC/catam-example-project/actions/workflows/compile-pdf.yml/badge.svg)](https://github.com/EasonSYC/catam-example-project/actions/workflows/compile-pdf.yml)
 
-Template for using my CATAM projects at Cambridge.
+My attempt at the CATAM Example Project at Cambridge.
